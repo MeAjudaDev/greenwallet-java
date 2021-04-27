@@ -1,7 +1,9 @@
 package ml.meajudadev.despesas;
 
-public class ExpenseCategory {
-//        "id": 1,
-//        "description": "Alimentação",
-//        "enabled": true
-}
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record ExpenseCategory(
+        @JsonProperty int id,
+        @JsonProperty String description,
+        @JsonProperty boolean enabled
+) { }
