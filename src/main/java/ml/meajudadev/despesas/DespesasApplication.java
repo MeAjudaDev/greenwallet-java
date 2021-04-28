@@ -39,8 +39,10 @@ public class DespesasApplication {
 //{
 //    "categories": [{
 //        "id": 1,
-//        "description": "Alimentação",
-//        "enabled": true
+//        "name": "Alimentação",
+//        "state": "A",
+//		  "type": "E",
+//		  "user_id": 1
 //    }, {
 //        "id": 2,
 //        "description": "Saúde",
