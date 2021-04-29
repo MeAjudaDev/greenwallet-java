@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record ExpenseCategory(
         @JsonProperty int id,
-        @JsonProperty String description,
-        @JsonProperty boolean enabled
+        @JsonProperty int userId,
+        @JsonProperty String name,
+        @JsonProperty char state,
+        @JsonProperty char type
 ) { }

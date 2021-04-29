@@ -19,10 +19,10 @@ public class DespesasApplication {
 
 	public DespesasApplication() {
 		categories = List.of(
-				new ExpenseCategory(1, "Alimentação", true),
-				new ExpenseCategory(2, "Saúde", true),
-				new ExpenseCategory(3, "Entretenimento", true),
-				new ExpenseCategory(4, "Educação", true)
+				new ExpenseCategory(1, 1, "Alimentação", 'A', 'E'),
+				new ExpenseCategory(2, 1, "Saúde", 'A', 'E'),
+				new ExpenseCategory(3, 1, "Entretenimento", 'A', 'E'),
+				new ExpenseCategory(4, 1, "Educação", 'A', 'E')
 		);
 	}
 
@@ -36,24 +36,3 @@ public class DespesasApplication {
 		return categories;
 	}
 }
-//{
-//    "categories": [{
-//        "id": 1,
-//        "name": "Alimentação",
-//        "state": "A",
-//		  "type": "E",
-//		  "user_id": 1
-//    }, {
-//        "id": 2,
-//        "description": "Saúde",
-//        "enabled": true
-//    }, {
-//        "id": 3,
-//        "description": "Entretenimento",
-//        "enabled": true
-//    }, {
-//        "id": 4,
-//        "description": "Educação",
-//        "enabled": true
-//    }]
-//}
