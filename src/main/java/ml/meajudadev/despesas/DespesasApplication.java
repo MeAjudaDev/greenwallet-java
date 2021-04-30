@@ -26,11 +26,6 @@ public class DespesasApplication {
 		);
 	}
 
-	@GetMapping("/hello")
-	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return String.format("Hello %s!", name);
-	}
-
 	@GetMapping("/api/v1/expense-categories")
 	public List<ExpenseCategory> listCategories() {
 		return categories;
