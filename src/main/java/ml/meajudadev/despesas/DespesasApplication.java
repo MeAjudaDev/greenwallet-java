@@ -1,6 +1,6 @@
 package ml.meajudadev.despesas;
 
-import ml.meajudadev.despesas.dto.ExpenseCategory;
+import ml.meajudadev.despesas.dto.ExpenseCategoryDTO;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,14 +13,14 @@ import java.util.List;
 @SpringBootApplication
 @RestController
 public class DespesasApplication {
-	private List<ExpenseCategory> categories;
+	private List<ExpenseCategoryDTO> categories;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DespesasApplication.class, args);
 	}
 
 	public DespesasApplication() {
-		categories = new ArrayList<ExpenseCategory>();
+		categories = new ArrayList<ExpenseCategoryDTO>();
 	}
 
 	@GetMapping("/hello")
