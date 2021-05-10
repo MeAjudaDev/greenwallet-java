@@ -1,13 +1,13 @@
 package ml.meajudadev.despesas.v1;
 
 import ml.meajudadev.despesas.v1.model.ExpenseModel;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class ExpensesController {
@@ -25,5 +25,18 @@ public class ExpensesController {
     @GetMapping("/api/v1/expenses")
     public List<ExpenseModel> listExpenses() {
         return expenses;
+    }
+
+    @GetMapping("/api/v1/expenses/{id}")
+    public ExpenseModel getExpenseById(@PathVariable int id) {
+        List<ExpenseModel> result = expenses.stream().filter(expense -> {
+            return expense.id() == id;
+        }).collect(Collectors.toList());
+
+        if (result.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        return result.get(0);
     }
 }
