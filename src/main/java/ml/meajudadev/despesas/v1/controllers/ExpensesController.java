@@ -1,14 +1,10 @@
 package ml.meajudadev.despesas.v1.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import ml.meajudadev.despesas.Expense;
+import ml.meajudadev.despesas.v1.dto.Expense;
 
-import javax.websocket.server.PathParam;
-import java.awt.print.Pageable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,26 +17,21 @@ public class ExpensesController {
     private final List<Expense> expenses = new ArrayList<>();
 
     public ExpensesController() {
-        expenses.add(new Expense(1, "Água", 73.21, true, "2021-04-08", Arrays.asList(1,5,3), 1));
-        expenses.add(new Expense(2, "Luz", 83.00, true, "2021-04-08", Arrays.asList(5,3),1));
+        expenses.add(new Expense(1, "Água", 73.21, true, LocalDate.of(2021,4,8), Arrays.asList(1,5,3), 1));
+        expenses.add(new Expense(2, "Luz", 83.00, true, LocalDate.of(2021,5,12), Arrays.asList(2,4),1));
     }
 
     @GetMapping
     public List<Expense> getExpenses(
-            @PathParam(value = "start_date") String startDate,
-            @PathParam(value = "end_date") String endDate,
-            @PathParam(value = "category") String category
+            @RequestParam(value = "start_date", required = false) LocalDate startDate,
+            @RequestParam(value = "end_date", required = false) LocalDate endDate,
+            @RequestParam(value = "category", required = false) Integer[] categories
     ) {
-        if (category != null) {
-            List<Integer> categoryIds = Arrays.stream(category.split(","))
-                                        .map(Integer::parseInt)
-                                        .collect(Collectors.toList());
-            return expenses
-                    .stream()
-                    .filter(expense -> expense.getCategoryIds().containsAll(categoryIds))
-                    .collect(Collectors.toList());
-        }
-
-        return expenses;
+        return expenses
+                .stream()
+                .filter(expense -> categories == null || expense.categoryIds().containsAll(Arrays.asList(categories)))
+                .filter(expense -> startDate == null || expense.dueDate().isEqual(startDate) || expense.dueDate().isAfter(startDate))
+                .filter(expense -> endDate == null || expense.dueDate().isEqual(endDate) || expense.dueDate().isBefore(endDate))
+                .collect(Collectors.toList());
     }
 }
