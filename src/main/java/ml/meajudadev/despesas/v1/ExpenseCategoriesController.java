@@ -2,10 +2,7 @@ package ml.meajudadev.despesas.v1;
 
 import ml.meajudadev.despesas.ExpenseCategory;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -44,5 +41,23 @@ public class ExpenseCategoriesController {
         }
 
         categories.remove(filter.get(0));
+    }
+
+    @PutMapping ("/api/v1/expense-categories/{id}")
+    public ExpenseCategory updateCategory(@PathVariable int id, @RequestBody ExpenseCategory expenseCategory) {
+        ExpenseCategory previousCategory = categories.stream()
+                .filter(category -> category.id() == id)
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        int i = categories.indexOf(previousCategory);
+        categories.set(i, new ExpenseCategory(id,
+                expenseCategory.userId(),
+                expenseCategory.name(),
+                expenseCategory.state(),
+                expenseCategory.type()
+                ));
+
+        return categories.get(i);
     }
 }
