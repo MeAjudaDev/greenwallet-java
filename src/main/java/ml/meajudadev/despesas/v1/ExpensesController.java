@@ -39,4 +39,19 @@ public class ExpensesController {
 
         return result.get(0);
     }
+
+    @PutMapping("/api/v1/expenses/{id}")
+    public HttpStatus editExpenseById(@PathVariable int id, @RequestBody ExpenseModel expense) {
+        List<ExpenseModel> result = expenses.stream().filter(e -> e.id() == id).collect(Collectors.toList());
+
+        if (result.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        ExpenseModel model = result.get(0);
+        int index = expenses.indexOf(model);
+        expenses.set(index, model);
+
+        return HttpStatus.OK;
+    }
 }
