@@ -1,4 +1,4 @@
-package ml.meajudadev.despesas.v1;
+package ml.meajudadev.despesas.v1.controllers;
 
 import ml.meajudadev.despesas.ExpenseCategory;
 import org.springframework.http.HttpStatus;
@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
