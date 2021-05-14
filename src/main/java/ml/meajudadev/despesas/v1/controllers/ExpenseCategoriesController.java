@@ -1,6 +1,6 @@
 package ml.meajudadev.despesas.v1.controllers;
 
-import ml.meajudadev.despesas.ExpenseCategory;
+import ml.meajudadev.despesas.v1.model.ExpenseCategoryModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,21 +11,21 @@ import java.util.stream.Collectors;
 
 @RestController
 public class ExpenseCategoriesController {
-    private List<ExpenseCategory> categories;
+    private List<ExpenseCategoryModel> categories;
 
     public ExpenseCategoriesController() {
-        categories = new ArrayList<ExpenseCategory>() {
+        categories = new ArrayList<ExpenseCategoryModel>() {
             {
-                add(new ExpenseCategory(1, 1, "Alimentação", 'A', 'E'));
-                add(new ExpenseCategory(2, 1, "Saúde", 'A', 'E'));
-                add(new ExpenseCategory(3, 1, "Entretenimento", 'A', 'E'));
-                add(new ExpenseCategory(4, 1, "Educação", 'A', 'E'));
+                add(new ExpenseCategoryModel(1, 1, "Alimentação", 'A', 'E'));
+                add(new ExpenseCategoryModel(2, 1, "Saúde", 'A', 'E'));
+                add(new ExpenseCategoryModel(3, 1, "Entretenimento", 'A', 'E'));
+                add(new ExpenseCategoryModel(4, 1, "Educação", 'A', 'E'));
             }
         };
     }
 
     @GetMapping("/api/v1/expense-categories")
-    public List<ExpenseCategory> listCategories() {
+    public List<ExpenseCategoryModel> listCategories() {
         return categories;
     }
 
@@ -43,18 +43,18 @@ public class ExpenseCategoriesController {
     }
 
     @PutMapping ("/api/v1/expense-categories/{id}")
-    public ExpenseCategory updateCategory(@PathVariable int id, @RequestBody ExpenseCategory expenseCategory) {
-        ExpenseCategory previousCategory = categories.stream()
+    public ExpenseCategoryModel updateCategory(@PathVariable int id, @RequestBody ExpenseCategoryModel expenseCategoryModel) {
+        ExpenseCategoryModel previousCategory = categories.stream()
                 .filter(category -> category.id() == id)
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         int i = categories.indexOf(previousCategory);
-        categories.set(i, new ExpenseCategory(id,
-                expenseCategory.userId(),
-                expenseCategory.name(),
-                expenseCategory.state(),
-                expenseCategory.type()
+        categories.set(i, new ExpenseCategoryModel(id,
+                expenseCategoryModel.userId(),
+                expenseCategoryModel.name(),
+                expenseCategoryModel.state(),
+                expenseCategoryModel.type()
                 ));
 
         return categories.get(i);

@@ -1,9 +1,8 @@
-package ml.meajudadev.despesas;
-
+package ml.meajudadev.despesas.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record ExpenseCategory(
+public record ExpenseCategoryModel(
         @JsonProperty("id") int id,
         @JsonProperty("userId") int userId,
         @JsonProperty("name") String name,
