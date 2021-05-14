@@ -1,12 +1,13 @@
 package ml.meajudadev.despesas.v1.controllers;
 
+import ml.meajudadev.despesas.v1.model.ExpenseModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import ml.meajudadev.despesas.v1.dto.Expense;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,24 +15,56 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/expenses")
 public class ExpensesController {
 
-    private final List<Expense> expenses = new ArrayList<>();
+    private List<ExpenseModel> expenses;
 
-    public ExpensesController() {
-        expenses.add(new Expense(1, "Água", 73.21, true, LocalDate.of(2021,4,8), Arrays.asList(1,5,3), 1));
-        expenses.add(new Expense(2, "Luz", 83.00, true, LocalDate.of(2021,5,12), Arrays.asList(2,4),1));
-    }
+    public ExpensesController() { expenses = new ArrayList<>(); }
 
     @GetMapping
-    public List<Expense> getExpenses(
+    public List<ExpenseModel> getExpenses(
             @RequestParam(value = "start_date", required = false) LocalDate startDate,
             @RequestParam(value = "end_date", required = false) LocalDate endDate,
-            @RequestParam(value = "category", required = false) Integer[] categories
+            @RequestParam(value = "category", required = false) Integer category
     ) {
         return expenses
                 .stream()
-                .filter(expense -> categories == null || expense.categoryIds().containsAll(Arrays.asList(categories)))
+                .filter(expense -> category == null || expense.categoryId().equals(category))
                 .filter(expense -> startDate == null || expense.dueDate().isEqual(startDate) || expense.dueDate().isAfter(startDate))
                 .filter(expense -> endDate == null || expense.dueDate().isEqual(endDate) || expense.dueDate().isBefore(endDate))
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping("/api/v1/expenses")
+    public void newExpense(@RequestBody ExpenseModel expense) {
+        expenses.add(expense);
+    }
+
+    @GetMapping("/api/v1/expenses")
+    public List<ExpenseModel> listExpenses() {
+        return expenses;
+    }
+
+    @GetMapping("/api/v1/expenses/{id}")
+    public ExpenseModel getExpenseById(@PathVariable int id) {
+        List<ExpenseModel> result = expenses.stream().filter(expense -> {
+            return expense.id() == id;
+        }).collect(Collectors.toList());
+
+        if (result.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        return result.get(0);
+    }
+
+    @PutMapping("/api/v1/expenses/{id}")
+    public void editExpense(@PathVariable int id, @RequestBody ExpenseModel expense) {
+        List<ExpenseModel> result = expenses.stream().filter(e -> e.id() == id).collect(Collectors.toList());
+
+        if (result.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        int index = expenses.indexOf(result.get(0));
+        expenses.set(index, expense);
     }
 }
