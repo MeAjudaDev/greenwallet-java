@@ -33,17 +33,12 @@ public class ExpensesController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/api/v1/expenses")
+    @PostMapping
     public void newExpense(@RequestBody ExpenseModel expense) {
         expenses.add(expense);
     }
 
-    @GetMapping("/api/v1/expenses")
-    public List<ExpenseModel> listExpenses() {
-        return expenses;
-    }
-
-    @GetMapping("/api/v1/expenses/{id}")
+    @GetMapping("/{id}")
     public ExpenseModel getExpenseById(@PathVariable int id) {
         List<ExpenseModel> result = expenses.stream().filter(expense -> {
             return expense.id() == id;
@@ -56,7 +51,7 @@ public class ExpensesController {
         return result.get(0);
     }
 
-    @PutMapping("/api/v1/expenses/{id}")
+    @PutMapping("/{id}")
     public void editExpense(@PathVariable int id, @RequestBody ExpenseModel expense) {
         List<ExpenseModel> result = expenses.stream().filter(e -> e.id() == id).collect(Collectors.toList());
 
