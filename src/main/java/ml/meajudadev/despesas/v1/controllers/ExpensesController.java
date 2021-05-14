@@ -62,4 +62,17 @@ public class ExpensesController {
         int index = expenses.indexOf(result.get(0));
         expenses.set(index, expense);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteExpense(@PathVariable int id) {
+        List<ExpenseModel> result = expenses.stream().filter(expense -> {
+            return expense.id() == id;
+        }).collect(Collectors.toList());
+
+        if (result.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        expenses.remove(result.get(0));
+    }
 }
