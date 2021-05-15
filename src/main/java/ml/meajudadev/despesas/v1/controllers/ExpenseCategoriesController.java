@@ -14,14 +14,12 @@ public class ExpenseCategoriesController {
     private List<ExpenseCategoryModel> categories;
 
     public ExpenseCategoriesController() {
-        categories = new ArrayList<ExpenseCategoryModel>() {
-            {
-                add(new ExpenseCategoryModel(1, 1, "Alimentação", 'A', 'E'));
-                add(new ExpenseCategoryModel(2, 1, "Saúde", 'A', 'E'));
-                add(new ExpenseCategoryModel(3, 1, "Entretenimento", 'A', 'E'));
-                add(new ExpenseCategoryModel(4, 1, "Educação", 'A', 'E'));
-            }
-        };
+        categories = new ArrayList<>();
+    }
+
+    @PostMapping("/api/v1/expense-categories")
+    public void newExpenseCategory(@RequestBody ExpenseCategoryModel expenseCategoryModel) {
+        categories.add(expenseCategoryModel);
     }
 
     @GetMapping("/api/v1/expense-categories")
