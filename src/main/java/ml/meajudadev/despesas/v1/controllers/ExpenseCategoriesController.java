@@ -27,6 +27,19 @@ public class ExpenseCategoriesController {
         return categories;
     }
 
+    @GetMapping("/api/v1/expense-categories/{id}")
+    public ExpenseCategoryModel findCategoryById(@PathVariable int id) {
+        var filter = categories.stream().filter(category -> {
+            return category.id() == id;
+        }).collect(Collectors.toList());
+
+        if(filter.size()==0){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        return filter.get(0);
+    }
+
     @DeleteMapping("/api/v1/expense-categories/{id}")
     public void deleteCategory(@PathVariable int id) {
         var filter = categories.stream().filter(category -> {
