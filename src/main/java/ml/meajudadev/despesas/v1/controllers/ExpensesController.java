@@ -3,7 +3,6 @@ package ml.meajudadev.despesas.v1.controllers;
 import ml.meajudadev.despesas.v1.model.ExpenseModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -14,10 +13,11 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/expenses")
 public class ExpensesController {
+    private final List<ExpenseModel> expenses;
 
-    private List<ExpenseModel> expenses;
-
-    public ExpensesController() { expenses = new ArrayList<>(); }
+    public ExpensesController() {
+        expenses = new ArrayList<>();
+    }
 
     @GetMapping
     public List<ExpenseModel> getExpenses(

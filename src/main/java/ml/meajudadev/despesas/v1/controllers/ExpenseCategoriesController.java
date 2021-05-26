@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @RestController
 public class ExpenseCategoriesController {
-    private List<ExpenseCategoryModel> categories;
+    private final List<ExpenseCategoryModel> categories;
 
     public ExpenseCategoriesController() {
         categories = new ArrayList<>();
@@ -33,7 +33,7 @@ public class ExpenseCategoriesController {
             return category.id() == id;
         }).collect(Collectors.toList());
 
-        if(filter.size()==0){
+        if (filter.size() == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
@@ -46,14 +46,14 @@ public class ExpenseCategoriesController {
             return category.id() == id;
         }).collect(Collectors.toList());
 
-        if(filter.size()==0){
+        if (filter.size() == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
         categories.remove(filter.get(0));
     }
 
-    @PutMapping ("/api/v1/expense-categories/{id}")
+    @PutMapping("/api/v1/expense-categories/{id}")
     public ExpenseCategoryModel updateCategory(@PathVariable int id, @RequestBody ExpenseCategoryModel expenseCategoryModel) {
         ExpenseCategoryModel previousCategory = categories.stream()
                 .filter(category -> category.id() == id)
@@ -66,7 +66,7 @@ public class ExpenseCategoriesController {
                 expenseCategoryModel.name(),
                 expenseCategoryModel.state(),
                 expenseCategoryModel.type()
-                ));
+        ));
 
         return categories.get(i);
     }

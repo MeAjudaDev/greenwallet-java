@@ -8,4 +8,5 @@ public record ExpenseCategoryModel(
         @JsonProperty("name") String name,
         @JsonProperty("state") char state,
         @JsonProperty("type") char type
-) { }
+) {
+}
