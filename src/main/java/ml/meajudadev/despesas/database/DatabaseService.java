@@ -1,4 +1,4 @@
-package ml.meajudadev.despesas.v1.database;
+package ml.meajudadev.despesas.database;
 
 import java.sql.Connection;
 
