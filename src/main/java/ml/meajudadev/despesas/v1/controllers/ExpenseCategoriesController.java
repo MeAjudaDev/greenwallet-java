@@ -1,10 +1,14 @@
 package ml.meajudadev.despesas.v1.controllers;
 
 import ml.meajudadev.despesas.v1.model.ExpenseCategoryModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +16,9 @@ import java.util.stream.Collectors;
 @RestController
 public class ExpenseCategoriesController {
     private final List<ExpenseCategoryModel> categories;
+
+    @Autowired
+    JdbcTemplate db;
 
     public ExpenseCategoriesController() {
         categories = new ArrayList<>();
@@ -23,8 +30,20 @@ public class ExpenseCategoriesController {
     }
 
     @GetMapping("/api/v1/expense-categories")
-    public List<ExpenseCategoryModel> listCategories() {
-        return categories;
+    public List<ExpenseCategoryModel> listCategories() throws SQLException {
+        return db.query("SELECT * FROM categories", (ResultSet r) -> {
+            var categories = new ArrayList<ExpenseCategoryModel>();
+            while(r.next()) {
+                categories.add(new ExpenseCategoryModel(
+                        r.getInt("id"),
+                        r.getInt("user_id"),
+                        r.getString("name"),
+                        r.getString("state").toCharArray()[0],
+                        r.getString("type").toCharArray()[0]
+                ));
+            }
+            return categories;
+        });
     }
 
     @GetMapping("/api/v1/expense-categories/{id}")
