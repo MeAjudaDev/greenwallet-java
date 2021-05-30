@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:mysql://{endereço do servidor aqui}:3306/gestao_financeira
+    username: {usuário}
+    password: {senha aqui}
+  mvc:
+    format:
+      date: yyyy-MM-dd
