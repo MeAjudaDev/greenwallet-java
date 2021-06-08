@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ml.meajudadev</groupId>
-	<artifactId>despesas</artifactId>
+	<artifactId>api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>despesas</name>
-	<description>Microsserviços de despesas do projeto de sistema de controle financeiro pessoal do Me Ajuda Dev</description>
+	<name>api</name>
+	<description>API do projeto do Green Wallet</description>
 	<properties>
 		<java.version>16</java.version>
 	</properties>
