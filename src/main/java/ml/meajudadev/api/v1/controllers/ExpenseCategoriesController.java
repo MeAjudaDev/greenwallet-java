@@ -1,6 +1,6 @@
-package ml.meajudadev.despesas.v1.controllers;
+package ml.meajudadev.api.v1.controllers;
 
-import ml.meajudadev.despesas.v1.dto.ExpenseCategoryDto;
+import ml.meajudadev.api.v1.dto.ExpenseCategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;

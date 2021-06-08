@@ -1,4 +1,4 @@
-package ml.meajudadev.despesas.v1.dto;
+package ml.meajudadev.api.v1.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

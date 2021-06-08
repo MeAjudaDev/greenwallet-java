@@ -1,6 +1,6 @@
-package ml.meajudadev.despesas.v1.controllers;
+package ml.meajudadev.api.v1.controllers;
 
-import ml.meajudadev.despesas.v1.dto.ExpenseDto;
+import ml.meajudadev.api.v1.dto.ExpenseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
