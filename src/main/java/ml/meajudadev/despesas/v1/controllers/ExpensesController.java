@@ -1,6 +1,6 @@
 package ml.meajudadev.despesas.v1.controllers;
 
-import ml.meajudadev.despesas.v1.model.ExpenseModel;
+import ml.meajudadev.despesas.v1.dto.ExpenseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/expenses")
 public class ExpensesController {
-    private final List<ExpenseModel> expenses;
+    private final List<ExpenseDto> expenses;
 
     public ExpensesController() {
         expenses = new ArrayList<>();
     }
 
     @GetMapping
-    public List<ExpenseModel> getExpenses(
+    public List<ExpenseDto> getExpenses(
             @RequestParam(value = "start_date", required = false) LocalDate startDate,
             @RequestParam(value = "end_date", required = false) LocalDate endDate,
             @RequestParam(value = "category", required = false) Integer category
@@ -34,13 +34,13 @@ public class ExpensesController {
     }
 
     @PostMapping
-    public void newExpense(@RequestBody ExpenseModel expense) {
+    public void newExpense(@RequestBody ExpenseDto expense) {
         expenses.add(expense);
     }
 
     @GetMapping("/{id}")
-    public ExpenseModel getExpenseById(@PathVariable int id) {
-        List<ExpenseModel> result = expenses.stream().filter(expense -> {
+    public ExpenseDto getExpenseById(@PathVariable int id) {
+        List<ExpenseDto> result = expenses.stream().filter(expense -> {
             return expense.id() == id;
         }).collect(Collectors.toList());
 
@@ -52,8 +52,8 @@ public class ExpensesController {
     }
 
     @PutMapping("/{id}")
-    public void editExpense(@PathVariable int id, @RequestBody ExpenseModel expense) {
-        List<ExpenseModel> result = expenses.stream().filter(e -> e.id() == id).collect(Collectors.toList());
+    public void editExpense(@PathVariable int id, @RequestBody ExpenseDto expense) {
+        List<ExpenseDto> result = expenses.stream().filter(e -> e.id() == id).collect(Collectors.toList());
 
         if (result.size() == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -65,7 +65,7 @@ public class ExpensesController {
 
     @DeleteMapping("/{id}")
     public void deleteExpense(@PathVariable int id) {
-        List<ExpenseModel> result = expenses.stream().filter(expense -> {
+        List<ExpenseDto> result = expenses.stream().filter(expense -> {
             return expense.id() == id;
         }).collect(Collectors.toList());
 

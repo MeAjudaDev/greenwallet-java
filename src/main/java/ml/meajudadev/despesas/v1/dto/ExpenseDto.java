@@ -1,11 +1,11 @@
-package ml.meajudadev.despesas.v1.model;
+package ml.meajudadev.despesas.v1.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public record ExpenseModel(
+public record ExpenseDto(
         @JsonProperty("id") int id,
         @JsonProperty("userId") int userId,
         @JsonProperty("categoryId") Integer categoryId,
