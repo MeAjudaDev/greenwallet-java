@@ -6,7 +6,7 @@ public record ExpenseCategoryDto(
         @JsonProperty("id") long id,
         @JsonProperty("userId") long userId,
         @JsonProperty("name") String name,
-        @JsonProperty("state") char state,
+        @JsonProperty("enabled") boolean enabled,
         @JsonProperty("type") char type
 ) {
 }
