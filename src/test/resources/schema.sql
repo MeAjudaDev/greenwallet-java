@@ -1,15 +1,13 @@
 create table users (
     id int AUTO_INCREMENT primary key,
-    name varchar(100) not null,                     -- Nome do usuario
-    email varchar(100) not null,                    -- Email do usuario
-    password varchar(100) not null,                 -- Senha do usuario
-    activation_code varchar(4),                     -- Codigo de ativação da conta / Recuperação de Senha
-    state char default 'P',                         -- [A] Ativo / [P] Pendente / [D] Desativado (a) / [E] Excluido (a)
+    name varchar(100) not null,
+    email varchar(100) not null,
+    password varchar(100) not null,
+    activation_code varchar(4),
+    state char default 'P',
     update_at datetime on update current_timestamp,
     created_at datetime default current_timestamp
-)
-engine = INNODB
-default charset = UTF8MB4;
+);
 
 create table categories (
     id int AUTO_INCREMENT primary key,
@@ -20,9 +18,7 @@ create table categories (
     update_at datetime on update current_timestamp,
     created_at datetime default current_timestamp,
     FOREIGN KEY (user_id) REFERENCES users(id)
-)
-engine = INNODB
-default charset = UTF8MB4;
+);
 
 create table transactions (
     id int AUTO_INCREMENT primary key,
@@ -38,6 +34,4 @@ create table transactions (
     created_at datetime default current_timestamp,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (category_id) REFERENCES categories(id)
-)
-engine = INNODB
-default charset = UTF8MB4;
+);

@@ -40,7 +40,7 @@ public class CategoriesRepository {
 
             ExpenseCategoryDto expenseCategoryDto = new ExpenseCategoryDto(
                     rs.getLong("id"),
-                    rs.getLong("userId"),
+                    rs.getLong("user_id"),
                     rs.getString("name"),
                     rs.getBoolean("enabled"),
                     rs.getString("type").toCharArray()[0]
