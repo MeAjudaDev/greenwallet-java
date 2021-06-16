@@ -38,7 +38,7 @@ public class ExpenseCategoriesController {
                         r.getInt("id"),
                         r.getInt("user_id"),
                         r.getString("name"),
-                        r.getString("state").toCharArray()[0],
+                        r.getBoolean("enabled"),
                         r.getString("type").toCharArray()[0]
                 ));
             }
@@ -83,7 +83,7 @@ public class ExpenseCategoriesController {
         categories.set(i, new ExpenseCategoryDto(id,
                 expenseCategoryDto.userId(),
                 expenseCategoryDto.name(),
-                expenseCategoryDto.state(),
+                expenseCategoryDto.enabled(),
                 expenseCategoryDto.type()
         ));
 

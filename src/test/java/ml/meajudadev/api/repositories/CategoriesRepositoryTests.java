@@ -27,13 +27,13 @@ public class CategoriesRepositoryTests {
         assertEquals(category.userId(), savedCategory.userId());
         assertEquals(category.name(), savedCategory.name());
         assertEquals(category.type(), savedCategory.type());
-        assertEquals(category.state(), savedCategory.state());
+        assertEquals(category.enabled(), savedCategory.enabled());
     }
 
     private static Stream<Arguments> provideCategories() {
         return Stream.of(
-            Arguments.of(new ExpenseCategoryDto(1, 1, "Alimentação", 'A', 'E')),
-            Arguments.of(new ExpenseCategoryDto(2, 1, "Educação", 'A', 'E'))
+            Arguments.of(new ExpenseCategoryDto(1, 1, "Alimentação", true, 'E')),
+            Arguments.of(new ExpenseCategoryDto(2, 1, "Educação", true, 'E'))
         );
     }
 }
