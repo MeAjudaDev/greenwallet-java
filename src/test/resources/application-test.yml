@@ -1,8 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:h2:mem:gestao_financeira
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: false

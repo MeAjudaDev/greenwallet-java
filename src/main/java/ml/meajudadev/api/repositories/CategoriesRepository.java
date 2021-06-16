@@ -3,16 +3,16 @@ package ml.meajudadev.api.repositories;
 import ml.meajudadev.api.v1.dto.ExpenseCategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Optional;
 
-@Component
+@Repository
 public class CategoriesRepository {
     @Autowired
-    private JdbcTemplate db;
+    JdbcTemplate db;
 
     public void save(ExpenseCategoryDto category) {
         db.execute("""
