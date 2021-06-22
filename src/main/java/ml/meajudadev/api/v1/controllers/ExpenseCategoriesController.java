@@ -52,15 +52,7 @@ public class ExpenseCategoriesController {
 
     @GetMapping("/api/v1/expense-categories/{id}")
     public ExpenseCategoryDto findCategoryById(@PathVariable int id) {
-        var filter = categories.stream().filter(category -> {
-            return category.id() == id;
-        }).collect(Collectors.toList());
-
-        if (filter.size() == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-
-        return filter.get(0);
+        return categoriesRepository.getById(id);
     }
 
     @DeleteMapping("/api/v1/expense-categories/{id}")
