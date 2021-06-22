@@ -1,5 +1,6 @@
 package ml.meajudadev.api.v1.controllers;
 
+import ml.meajudadev.api.repositories.CategoriesRepository;
 import ml.meajudadev.api.v1.dto.ExpenseCategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,13 +21,16 @@ public class ExpenseCategoriesController {
     @Autowired
     JdbcTemplate db;
 
+    @Autowired
+    CategoriesRepository categoriesRepository;
+
     public ExpenseCategoriesController() {
         categories = new ArrayList<>();
     }
 
     @PostMapping("/api/v1/expense-categories")
     public void newExpenseCategory(@RequestBody ExpenseCategoryDto expenseCategoryDto) {
-        categories.add(expenseCategoryDto);
+        categoriesRepository.save(expenseCategoryDto);
     }
 
     @GetMapping("/api/v1/expense-categories")
