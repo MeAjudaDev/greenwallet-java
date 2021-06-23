@@ -36,19 +36,8 @@ public class ExpenseCategoriesController {
 
     @GetMapping("/api/v1/expense-categories")
     public List<ExpenseCategoryDto> listCategories() throws SQLException {
-        return db.query("SELECT * FROM categories", (ResultSet r) -> {
-            var categories = new ArrayList<ExpenseCategoryDto>();
-            while(r.next()) {
-                categories.add(new ExpenseCategoryDto(
-                        r.getInt("id"),
-                        r.getInt("user_id"),
-                        r.getString("name"),
-                        r.getBoolean("enabled"),
-                        r.getString("type").toCharArray()[0]
-                ));
-            }
-            return categories;
-        });
+        List<ExpenseCategoryDto> result = categoriesRepository.listAll();
+        return result;
     }
 
     @GetMapping("/api/v1/expense-categories/{id}")
