@@ -8,12 +8,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 public class ExpenseCategoriesController {
@@ -48,15 +46,12 @@ public class ExpenseCategoriesController {
 
     @DeleteMapping("/api/v1/expense-categories/{id}")
     public void deleteCategory(@PathVariable int id) {
-        var filter = categories.stream().filter(category -> {
-            return category.id() == id;
-        }).collect(Collectors.toList());
-
-        if (filter.size() == 0) {
+        Optional<ExpenseCategoryDto> query = categoriesRepository.getById(id);
+        if (query.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        categories.remove(filter.get(0));
+        categoriesRepository.deleteById(id);
     }
 
     @PutMapping("/api/v1/expense-categories/{id}")
