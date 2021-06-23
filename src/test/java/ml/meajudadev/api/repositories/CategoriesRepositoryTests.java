@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -56,6 +57,7 @@ public class CategoriesRepositoryTests {
     public void givenACategory_thenItCanBeDeleted() {
         repository.deleteById(1);
         Optional<ExpenseCategoryDto> queryResult = repository.getById(1);
-        assertTrue(queryResult.isEmpty());
+        assertTrue(queryResult.isPresent());
+        assertFalse(queryResult.get().enabled());
     }
 }
