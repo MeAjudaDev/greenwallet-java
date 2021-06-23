@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -48,5 +50,9 @@ public class CategoriesRepository {
 
             return Optional.of(expenseCategoryDto);
         });
+    }
+
+    public List<ExpenseCategoryDto> listAll() {
+        return new ArrayList<>();
     }
 }
