@@ -14,7 +14,7 @@ public class CategoriesRepository {
     @Autowired
     JdbcTemplate db;
 
-    public void save(ExpenseCategoryDto category) {
+    public void createNew(ExpenseCategoryDto category) {
         db.execute("""
             INSERT INTO categories (
                 user_id,

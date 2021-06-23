@@ -31,7 +31,7 @@ public class ExpenseCategoriesController {
 
     @PostMapping("/api/v1/expense-categories")
     public void newExpenseCategory(@RequestBody ExpenseCategoryDto expenseCategoryDto) {
-        categoriesRepository.save(expenseCategoryDto);
+        categoriesRepository.createNew(expenseCategoryDto);
     }
 
     @GetMapping("/api/v1/expense-categories")

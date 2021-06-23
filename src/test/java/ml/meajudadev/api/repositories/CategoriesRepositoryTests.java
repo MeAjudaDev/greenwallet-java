@@ -21,7 +21,7 @@ public class CategoriesRepositoryTests {
     @ParameterizedTest
     @MethodSource("provideCategories")
     public void givenNewCategory_thenItCanBeSaved(ExpenseCategoryDto category) {
-        repository.save(category);
+        repository.createNew(category);
         Optional<ExpenseCategoryDto> savedCategoryOptional = repository.getById(category.id());
 
         assertTrue(savedCategoryOptional.isPresent());
