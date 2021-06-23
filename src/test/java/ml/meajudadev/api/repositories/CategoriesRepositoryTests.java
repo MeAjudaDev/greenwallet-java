@@ -51,4 +51,11 @@ public class CategoriesRepositoryTests {
         List<ExpenseCategoryDto> categories = repository.listAll();
         assertEquals(2, categories.size());
     }
+
+    @Test
+    public void givenACategory_thenItCanBeDeleted() {
+        repository.deleteById(1);
+        Optional<ExpenseCategoryDto> queryResult = repository.getById(1);
+        assertTrue(queryResult.isEmpty());
+    }
 }
