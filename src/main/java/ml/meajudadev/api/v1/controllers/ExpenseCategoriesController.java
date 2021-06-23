@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -30,7 +31,7 @@ public class ExpenseCategoriesController {
 
     @PostMapping("/api/v1/expense-categories")
     public void newExpenseCategory(@RequestBody ExpenseCategoryDto expenseCategoryDto) {
-        categoriesRepository.save(expenseCategoryDto);
+        categoriesRepository.createNew(expenseCategoryDto);
     }
 
     @GetMapping("/api/v1/expense-categories")
@@ -52,15 +53,8 @@ public class ExpenseCategoriesController {
 
     @GetMapping("/api/v1/expense-categories/{id}")
     public ExpenseCategoryDto findCategoryById(@PathVariable int id) {
-        var filter = categories.stream().filter(category -> {
-            return category.id() == id;
-        }).collect(Collectors.toList());
-
-        if (filter.size() == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-
-        return filter.get(0);
+        Optional<ExpenseCategoryDto> result = categoriesRepository.getById(id);
+        return result.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/api/v1/expense-categories/{id}")
