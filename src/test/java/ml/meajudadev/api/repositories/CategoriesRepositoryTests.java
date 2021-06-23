@@ -40,5 +40,5 @@ public class CategoriesRepositoryTests {
             Arguments.of(new ExpenseCategoryDto(1, 1, "Alimentação", true, 'E')),
             Arguments.of(new ExpenseCategoryDto(2, 1, "Educação", true, 'E'))
         );
-    }
+    } 
 }
