@@ -38,8 +38,8 @@ public class CategoriesRepositoryTests {
 
     private static Stream<Arguments> provideCategories() {
         return Stream.of(
-            Arguments.of(new ExpenseCategoryDto(1, 1, "Alimentação", true, 'E')),
-            Arguments.of(new ExpenseCategoryDto(2, 1, "Educação", true, 'E'))
+            Arguments.of(new ExpenseCategoryDto(3, 1, "Alimentação", true, 'E')),
+            Arguments.of(new ExpenseCategoryDto(4, 1, "Educação", true, 'E'))
         );
     }
 
