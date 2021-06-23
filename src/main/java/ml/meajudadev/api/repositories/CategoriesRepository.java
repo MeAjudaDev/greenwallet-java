@@ -67,4 +67,8 @@ public class CategoriesRepository {
             return categories;
         });
     }
+
+    public void deleteById(long id) {
+         db.update("UPDATE categories SET enabled = 0 WHERE id = ?", id);
+    }
 }
