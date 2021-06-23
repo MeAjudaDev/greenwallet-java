@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -52,7 +53,8 @@ public class ExpenseCategoriesController {
 
     @GetMapping("/api/v1/expense-categories/{id}")
     public ExpenseCategoryDto findCategoryById(@PathVariable int id) {
-        return categoriesRepository.getById(id);
+        Optional<ExpenseCategoryDto> result = categoriesRepository.getById(id);
+        return result.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/api/v1/expense-categories/{id}")
