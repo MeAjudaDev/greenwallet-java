@@ -9,23 +9,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class ExpenseCategoriesController {
-    private final List<ExpenseCategoryDto> categories;
-
     @Autowired
     JdbcTemplate db;
 
     @Autowired
     CategoriesRepository categoriesRepository;
-
-    public ExpenseCategoriesController() {
-        categories = new ArrayList<>();
-    }
 
     @PostMapping("/api/v1/expense-categories")
     public void newExpenseCategory(@RequestBody ExpenseCategoryDto expenseCategoryDto) {
@@ -55,20 +48,22 @@ public class ExpenseCategoriesController {
     }
 
     @PutMapping("/api/v1/expense-categories/{id}")
-    public ExpenseCategoryDto updateCategory(@PathVariable int id, @RequestBody ExpenseCategoryDto expenseCategoryDto) {
-        ExpenseCategoryDto previousCategory = categories.stream()
-                .filter(category -> category.id() == id)
-                .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public ExpenseCategoryDto updateCategory(@PathVariable long id, @RequestBody ExpenseCategoryDto newValues) {
+        Optional<ExpenseCategoryDto> query = categoriesRepository.getById(id);
 
-        int i = categories.indexOf(previousCategory);
-        categories.set(i, new ExpenseCategoryDto(id,
-                expenseCategoryDto.userId(),
-                expenseCategoryDto.name(),
-                expenseCategoryDto.enabled(),
-                expenseCategoryDto.type()
-        ));
+        if (query.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-        return categories.get(i);
+        var category = new ExpenseCategoryDto(
+            id,
+            newValues.userId(),
+            newValues.name(),
+            newValues.enabled(),
+            newValues.type()
+        );
+
+        categoriesRepository.update(category);
+
+        return category;
     }
 }
