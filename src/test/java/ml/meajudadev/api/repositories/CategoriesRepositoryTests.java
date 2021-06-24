@@ -63,14 +63,21 @@ public class CategoriesRepositoryTests {
 
     @Test
     public void givenAnExistingCategory_thenItCanBeEdited() {
-        var expenseCategoryDto = new ExpenseCategoryDto(
+        var category = new ExpenseCategoryDto(
                 1,
                 2,
                 "alimentação",
                 false,
                 'R'
         );
+
+        repository.update(category);
+
         Optional<ExpenseCategoryDto> queryResult = repository.getById(1);
 
+        assertEquals(2, category.userId());
+        assertEquals("alimentação", category.name());
+        assertFalse(category.enabled());
+        assertEquals('R', category.type());
     }
 }
