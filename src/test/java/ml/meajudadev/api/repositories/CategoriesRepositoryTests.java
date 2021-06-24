@@ -60,4 +60,17 @@ public class CategoriesRepositoryTests {
         assertTrue(queryResult.isPresent());
         assertFalse(queryResult.get().enabled());
     }
+
+    @Test
+    public void givenAnExistingCategory_thenItCanBeEdited() {
+        var expenseCategoryDto = new ExpenseCategoryDto(
+                1,
+                2,
+                "alimentação",
+                false,
+                'R'
+        );
+        Optional<ExpenseCategoryDto> queryResult = repository.getById(1);
+
+    }
 }
