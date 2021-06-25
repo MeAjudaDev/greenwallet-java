@@ -34,6 +34,21 @@ public class CategoriesRepository {
     }
 
     public void update(ExpenseCategoryDto category) {
+        db.execute("""
+            UPDATE categories SET
+                user_id = ?,
+                name = ?,
+                enabled = ?,
+                type = ?
+            WHERE id = ?
+        """, (PreparedStatement ps) -> {
+            ps.setLong(1, category.userId());
+            ps.setString(2, category.name());
+            ps.setBoolean(3, category.enabled());
+            ps.setString(4, String.valueOf(category.type()));
+            ps.setLong(5, category.id());
+            return ps.execute();
+        });
     }
 
     public Optional<ExpenseCategoryDto> getById(long categoryId) {
