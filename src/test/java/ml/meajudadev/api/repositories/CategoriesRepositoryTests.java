@@ -74,10 +74,11 @@ public class CategoriesRepositoryTests {
         repository.update(category);
 
         Optional<ExpenseCategoryDto> queryResult = repository.getById(1);
+        var actual = queryResult.get();
 
-        assertEquals(2, category.userId());
-        assertEquals("alimentação", category.name());
-        assertFalse(category.enabled());
-        assertEquals('R', category.type());
+        assertEquals(2, actual.userId());
+        assertEquals("alimentação", actual.name());
+        assertFalse(actual.enabled());
+        assertEquals('R', actual.type());
     }
 }

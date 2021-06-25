@@ -33,6 +33,9 @@ public class CategoriesRepository {
         });
     }
 
+    public void update(ExpenseCategoryDto category) {
+    }
+
     public Optional<ExpenseCategoryDto> getById(long categoryId) {
         return db.query("SELECT * FROM categories WHERE id = ?", (PreparedStatement ps) -> {
             ps.setLong(1, categoryId);
