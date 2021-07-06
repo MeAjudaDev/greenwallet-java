@@ -13,15 +13,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
 public class CategoriesRepositoryTests {
     @Autowired
     CategoriesRepository repository;
+
+    private static Stream<Arguments> provideCategories() {
+        return Stream.of(
+                Arguments.of(new ExpenseCategoryDto(3, 1, "Alimentação", true, 'E')),
+                Arguments.of(new ExpenseCategoryDto(4, 1, "Educação", true, 'E'))
+        );
+    }
 
     @ParameterizedTest
     @MethodSource("provideCategories")
@@ -38,13 +43,6 @@ public class CategoriesRepositoryTests {
         assertEquals(category.name(), savedCategory.name());
         assertEquals(category.type(), savedCategory.type());
         assertEquals(category.enabled(), savedCategory.enabled());
-    }
-
-    private static Stream<Arguments> provideCategories() {
-        return Stream.of(
-            Arguments.of(new ExpenseCategoryDto(3, 1, "Alimentação", true, 'E')),
-            Arguments.of(new ExpenseCategoryDto(4, 1, "Educação", true, 'E'))
-        );
     }
 
     @Test
