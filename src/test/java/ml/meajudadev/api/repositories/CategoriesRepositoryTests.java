@@ -1,6 +1,7 @@
 package ml.meajudadev.api.repositories;
 
 import ml.meajudadev.api.v1.dto.ExpenseCategoryDto;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -30,6 +31,7 @@ public class CategoriesRepositoryTests {
 
     @ParameterizedTest
     @MethodSource("provideCategories")
+    @DisplayName("can create a new transaction category")
     public void givenNewCategory_thenItCanBeSaved(ExpenseCategoryDto category) {
         repository.createNew(category);
         Optional<ExpenseCategoryDto> savedCategoryOptional = repository.getById(category.id());
@@ -46,13 +48,15 @@ public class CategoriesRepositoryTests {
     }
 
     @Test
+    @DisplayName("can list all existing transaction categories")
     public void givenAllCategories_thenTheyCanBeListed() {
         List<ExpenseCategoryDto> categories = repository.listAll();
         assertEquals(2, categories.size());
     }
 
     @Test
-    public void givenACategory_thenItCanBeDeleted() {
+    @DisplayName("can logically delete an existing transaction category")
+    public void givenAnExistingCategory_thenItCanBeDeleted() {
         repository.deleteById(1);
         Optional<ExpenseCategoryDto> queryResult = repository.getById(1);
         assertTrue(queryResult.isPresent());
@@ -60,6 +64,7 @@ public class CategoriesRepositoryTests {
     }
 
     @Test
+    @DisplayName("can edit an existing transaction category")
     public void givenAnExistingCategory_thenItCanBeEdited() {
         var category = new ExpenseCategoryDto(
                 1,
