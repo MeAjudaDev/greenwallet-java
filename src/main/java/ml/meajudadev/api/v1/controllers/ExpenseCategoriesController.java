@@ -15,9 +15,6 @@ import java.util.Optional;
 @RestController
 public class ExpenseCategoriesController {
     @Autowired
-    JdbcTemplate db;
-
-    @Autowired
     CategoriesRepository categoriesRepository;
 
     @PostMapping("/api/v1/expense-categories")
