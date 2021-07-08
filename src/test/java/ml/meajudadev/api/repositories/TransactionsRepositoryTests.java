@@ -1,5 +1,7 @@
 package ml.meajudadev.api.repositories;
 
+import ml.meajudadev.api.entities.Transaction;
+import ml.meajudadev.api.entities.enums.TransactionState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,5 +17,10 @@ public class TransactionsRepositoryTests {
     @Test
     @DisplayName("can create a new transaction")
     public void givenNewTransaction_thenItCanBeSaved() {
+        Transaction transaction = new Transaction();
+        transaction.setCategoryId(1L);
+        transaction.setDescription("Curso de JavaScript");
+        transaction.setFixed(false);
+        transaction.setState(TransactionState.ACTIVE);
     }
 }
