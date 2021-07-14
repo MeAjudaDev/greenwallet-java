@@ -45,6 +45,20 @@ public class TransactionsRepositoryTests {
         assertEquals(50D, transaction.getValue());
         assertEquals(LocalDate.of(2021, Month.JULY, 10), transaction.getDueDate());
         assertNotNull(transaction.getCreatedAt());
-        assertNotNull(transaction.getUpdateAt());
+        assertNotNull(transaction.getUpdatedAt());
+
+        Transaction savedTransaction = repository.getById(transaction.getId());
+
+        assertEquals(transaction.getId(), savedTransaction.getId());
+        assertEquals(transaction.getCategoryId(), savedTransaction.getCategoryId());
+        assertEquals(transaction.getUserId(), savedTransaction.getUserId());
+        assertEquals(transaction.getDescription(), savedTransaction.getDescription());
+        assertFalse(savedTransaction.isFixed());
+        assertEquals(transaction.getState(), savedTransaction.getState());
+        assertEquals(transaction.getType(), savedTransaction.getType());
+        assertEquals(transaction.getValue(), savedTransaction.getValue());
+        assertEquals(transaction.getDueDate(), savedTransaction.getDueDate());
+        assertNotNull(savedTransaction.getCreatedAt());
+        assertNotNull(savedTransaction.getUpdatedAt());
     }
 }

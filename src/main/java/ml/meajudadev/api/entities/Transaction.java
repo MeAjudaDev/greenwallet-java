@@ -15,7 +15,7 @@ public class Transaction {
     private TransactionType type;
     private TransactionState state;
     private LocalDate createdAt;
-    private LocalDate updateAt;
+    private LocalDate updatedAt;
 
     private Long userId;
     private Long categoryId;
@@ -23,7 +23,19 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Long id, String description, Double value, boolean isFixed, LocalDate dueDate, TransactionType type, TransactionState state, LocalDate createdAt, LocalDate updateAt, Long userId, Long categoryId) {
+    public Transaction(
+            Long id,
+            String description,
+            Double value,
+            boolean isFixed,
+            LocalDate dueDate,
+            TransactionType type,
+            TransactionState state,
+            LocalDate createdAt,
+            LocalDate updatedAt,
+            Long userId,
+            Long categoryId
+    ) {
         this.id = id;
         this.description = description;
         this.value = value;
@@ -32,7 +44,7 @@ public class Transaction {
         this.type = type;
         this.state = state;
         this.createdAt = createdAt;
-        this.updateAt = updateAt;
+        this.updatedAt = updatedAt;
         this.userId = userId;
         this.categoryId = categoryId;
     }
@@ -101,12 +113,12 @@ public class Transaction {
         this.createdAt = createdAt;
     }
 
-    public LocalDate getUpdateAt() {
-        return updateAt;
+    public LocalDate getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateAt(LocalDate updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdatedAt(LocalDate updateAt) {
+        this.updatedAt = updateAt;
     }
 
     public Long getUserId() {
