@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.time.Month;
 
@@ -16,9 +17,27 @@ public class TransactionsRepository {
     JdbcTemplate db;
 
     public void save(Transaction transaction) {
-        transaction.setId(3L);
-        transaction.setCreatedAt(LocalDate.of(2021, Month.JULY, 13));
-        transaction.setUpdatedAt(LocalDate.of(2021, Month.JULY, 13));
+        db.execute("""
+                INSERT INTO transactions
+                    user_id,
+                    category_id,
+                    description,
+                    value,
+                    is_fixed,
+                    due_date,
+                    type,
+                    state
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """, (PreparedStatement ps) -> {
+            ps.setLong(1, transaction.getUserId());
+            ps.setLong(2, transaction.getCategoryId());
+            ps.setString(3, transaction.getDescription());
+            ps.setDouble(4, transaction.getValue());
+            ps.setBoolean(5, transaction.isFixed());
+            ps.setDate(6, transaction.getDueDate().);
+
+            return ps.execute();
+        });
     }
 
     public Transaction getById(Long id) {
