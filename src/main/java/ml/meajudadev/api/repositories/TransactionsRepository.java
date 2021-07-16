@@ -3,14 +3,17 @@ package ml.meajudadev.api.repositories;
 import ml.meajudadev.api.entities.Transaction;
 import ml.meajudadev.api.entities.enums.TransactionState;
 import ml.meajudadev.api.entities.enums.TransactionType;
+import ml.meajudadev.api.v1.dto.ExpenseCategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Repository
 public class TransactionsRepository {
@@ -42,21 +45,24 @@ public class TransactionsRepository {
         });
     }
 
-    public Transaction getById(Long id) {
-        Transaction transaction = new Transaction();
+    public Optional<Transaction> getById(Long id) {
+        return db.query("SELECT * FROM transactions WHERE id = ?", (PreparedStatement ps) -> {
+            ps.setLong(1, id);
+        }, (ResultSet rs) -> {
+            if (!rs.first())
+                return Optional.empty();
 
-        transaction.setId(3L);
-        transaction.setCategoryId(1L);
-        transaction.setUserId(1L);
-        transaction.setDescription("Curso de JavaScript");
-        transaction.setFixed(false);
-        transaction.setState(TransactionState.ACTIVE);
-        transaction.setType(TransactionType.EXPENSE);
-        transaction.setValue(50D);
-        transaction.setDueDate(LocalDate.of(2021, Month.JULY, 10));
-        transaction.setCreatedAt(LocalDate.of(2021, Month.JULY, 13));
-        transaction.setUpdatedAt(LocalDate.of(2021, Month.JULY, 13));
+            Transaction transaction = new Transaction(
+                    rs.getLong("id"),
+                    rs.getString("description"),
+                    rs.getDouble("value"),
+                    rs.getBoolean("isFixed"),
+                    LocalDate.parse(rs.getString("DueDate"), DateTimeFormatter.ISO_LOCAL_DATE),
+                    TransactionType.valueOf(rs.getString("type"))
+            );
 
-        return transaction;
+            return Optional.of(transaction);
+        });
+
     }
 }

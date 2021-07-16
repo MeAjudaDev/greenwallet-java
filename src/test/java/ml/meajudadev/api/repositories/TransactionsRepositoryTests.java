@@ -24,14 +24,6 @@ public class TransactionsRepositoryTests {
     @DisplayName("can create a new transaction")
     public void givenNewTransaction_thenItCanBeSaved() {
         Transaction transaction = new Transaction();
-        transaction.setCategoryId(1L);
-        transaction.setUserId(1L);
-        transaction.setDescription("Curso de JavaScript");
-        transaction.setFixed(false);
-        transaction.setState(TransactionState.ACTIVE);
-        transaction.setType(TransactionType.EXPENSE);
-        transaction.setValue(50D);
-        transaction.setDueDate(LocalDate.of(2021, Month.JULY, 10));
 
         repository.save(transaction);
 
