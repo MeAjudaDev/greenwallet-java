@@ -30,7 +30,7 @@ create table transactions (
     due_date date not null,                         -- Data de Vencimento ou Data de Recebimento
     type char not null,                             -- Tipo da transação: [E] Expense (Despesas) / [R] Revenue (Receitas)
     state char default 'A',                         -- [A] Ativo / [D] Desativado (a) / [E] Excluido (a)
-    update_at datetime on update current_timestamp,
+    updated_at datetime on update current_timestamp,
     created_at datetime default current_timestamp,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (category_id) REFERENCES categories(id)

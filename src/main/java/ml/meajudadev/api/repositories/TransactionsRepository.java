@@ -56,9 +56,14 @@ public class TransactionsRepository {
                     rs.getLong("id"),
                     rs.getString("description"),
                     rs.getDouble("value"),
-                    rs.getBoolean("isFixed"),
-                    LocalDate.parse(rs.getString("DueDate"), DateTimeFormatter.ISO_LOCAL_DATE),
-                    TransactionType.valueOf(rs.getString("type"))
+                    rs.getBoolean("is_fixed"),
+                    LocalDate.parse(rs.getString("due_date"), DateTimeFormatter.ISO_LOCAL_DATE),
+                    TransactionType.valueOf(rs.getString("type")),
+                    TransactionState.valueOf(rs.getString("state")),
+                    LocalDate.parse(rs.getString("updated_at"), DateTimeFormatter.ISO_LOCAL_DATE),
+                    LocalDate.parse(rs.getString("created_at"), DateTimeFormatter.ISO_LOCAL_DATE),
+                    rs.getLong("user_id"),
+                    rs.getLong("category_id")
             );
 
             return Optional.of(transaction);
