@@ -19,7 +19,7 @@ public class TransactionsRepository {
 
     public void save(Transaction transaction) {
         db.execute("""
-            INSERT INTO transactions
+            INSERT INTO transactions (
                 user_id,
                 category_id,
                 description,
