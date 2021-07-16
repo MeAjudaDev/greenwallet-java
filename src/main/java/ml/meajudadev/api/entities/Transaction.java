@@ -4,151 +4,151 @@ import ml.meajudadev.api.entities.enums.TransactionState;
 import ml.meajudadev.api.entities.enums.TransactionType;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Transaction {
-
-    private Long id;
+    private long id;
+    private long userId;
+    private long categoryId;
     private String description;
-    private Double value;
+    private double value;
     private boolean isFixed;
     private LocalDate dueDate;
     private TransactionType type;
     private TransactionState state;
     private LocalDate createdAt;
-    private LocalDate updatedAt;
+    private LocalDate lastUpdatedAt;
 
-    private Long userId;
-    private Long categoryId;
-
-    public Transaction() {
-    }
-
-    public Transaction(
-            Long id,
-            String description,
-            Double value,
-            boolean isFixed,
-            LocalDate dueDate,
-            TransactionType type,
-            TransactionState state,
-            LocalDate createdAt,
-            LocalDate updatedAt,
-            Long userId,
-            Long categoryId
-    ) {
-        this.id = id;
-        this.description = description;
-        this.value = value;
-        this.isFixed = isFixed;
-        this.dueDate = dueDate;
-        this.type = type;
-        this.state = state;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.userId = userId;
-        this.categoryId = categoryId;
-    }
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public Transaction setId(long id) {
         this.id = id;
+        return this;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public Transaction setUserId(long userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public long getCategoryId() {
+        return categoryId;
+    }
+
+    public Transaction setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public Transaction setDescription(String description) {
+        this.description = Objects.requireNonNull(description);
+        return this;
     }
 
-    public Double getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public Transaction setValue(double value) {
         this.value = value;
+        return this;
     }
 
     public boolean isFixed() {
         return isFixed;
     }
 
-    public void setFixed(boolean fixed) {
+    public Transaction setFixed(boolean fixed) {
         isFixed = fixed;
+        return this;
     }
 
     public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
+    public Transaction setDueDate(LocalDate dueDate) {
+        this.dueDate = Objects.requireNonNull(dueDate);
+        return this;
     }
 
     public TransactionType getType() {
         return type;
     }
 
-    public void setType(TransactionType type) {
-        this.type = type;
+    public Transaction setType(TransactionType type) {
+        this.type = Objects.requireNonNull(type);
+        return this;
     }
 
     public TransactionState getState() {
         return state;
     }
 
-    public void setState(TransactionState state) {
-        this.state = state;
+    public Transaction setState(TransactionState state) {
+        this.state = Objects.requireNonNull(state);
+        return this;
     }
 
     public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
+    public Transaction setCreatedAt(LocalDate createdAt) {
+        this.createdAt = Objects.requireNonNull(createdAt);
+        return this;
     }
 
-    public LocalDate getUpdatedAt() {
-        return updatedAt;
+    public LocalDate getLastUpdatedAt() {
+        return lastUpdatedAt;
     }
 
-    public void setUpdatedAt(LocalDate updateAt) {
-        this.updatedAt = updateAt;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public Transaction setLastUpdatedAt(LocalDate lastUpdatedAt) {
+        this.lastUpdatedAt = Objects.requireNonNull(lastUpdatedAt);
+        return this;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Transaction that = (Transaction) o;
-
-        return getId().equals(that.getId());
+        if (!(o instanceof Transaction that)) return false;
+        return getId() == that.getId()
+                && getUserId() == that.getUserId()
+                && getCategoryId() == that.getCategoryId()
+                && Double.compare(that.getValue(), getValue()) == 0
+                && isFixed() == that.isFixed()
+                && getDescription().equals(that.getDescription())
+                && Objects.equals(getDueDate(), that.getDueDate())
+                && getType() == that.getType()
+                && getState() == that.getState()
+                && getCreatedAt().equals(that.getCreatedAt())
+                && getLastUpdatedAt().equals(that.getLastUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return getId().hashCode();
+        return Objects.hash(
+                getId(),
+                getUserId(),
+                getCategoryId(),
+                getDescription(),
+                getValue(),
+                isFixed(),
+                getDueDate(),
+                getType(),
+                getState(),
+                getCreatedAt(),
+                getLastUpdatedAt()
+        );
     }
 }
