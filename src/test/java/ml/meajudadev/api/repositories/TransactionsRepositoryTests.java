@@ -23,7 +23,15 @@ public class TransactionsRepositoryTests {
     @Test
     @DisplayName("can create a new transaction")
     public void givenNewTransaction_thenItCanBeSaved() {
-        Transaction transaction = new Transaction();
+        Transaction transaction = new Transaction()
+                .setCategoryId(1L)
+                .setUserId(1L)
+                .setDescription("Curso de JavaScript")
+                .setFixed(false)
+                .setState(TransactionState.ACTIVE)
+                .setType(TransactionType.EXPENSE)
+                .setValue(50D)
+                .setDueDate(LocalDate.of(2021, Month.JULY, 10));
 
         repository.save(transaction);
 
@@ -37,9 +45,9 @@ public class TransactionsRepositoryTests {
         assertEquals(50D, transaction.getValue());
         assertEquals(LocalDate.of(2021, Month.JULY, 10), transaction.getDueDate());
         assertNotNull(transaction.getCreatedAt());
-        assertNotNull(transaction.getUpdatedAt());
+        assertNull(transaction.getLastUpdatedAt());
 
-        Transaction savedTransaction = repository.getById(transaction.getId());
+        Transaction savedTransaction = repository.getById(transaction.getId()).get();
 
         assertEquals(transaction.getId(), savedTransaction.getId());
         assertEquals(transaction.getCategoryId(), savedTransaction.getCategoryId());
@@ -51,6 +59,6 @@ public class TransactionsRepositoryTests {
         assertEquals(transaction.getValue(), savedTransaction.getValue());
         assertEquals(transaction.getDueDate(), savedTransaction.getDueDate());
         assertNotNull(savedTransaction.getCreatedAt());
-        assertNotNull(savedTransaction.getUpdatedAt());
+        assertNull(savedTransaction.getLastUpdatedAt());
     }
 }
