@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 
 @Repository
 public class TransactionsRepository {
@@ -18,24 +19,25 @@ public class TransactionsRepository {
 
     public void save(Transaction transaction) {
         db.execute("""
-                INSERT INTO transactions
-                    user_id,
-                    category_id,
-                    description,
-                    value,
-                    is_fixed,
-                    due_date,
-                    type,
-                    state
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                """, (PreparedStatement ps) -> {
+            INSERT INTO transactions
+                user_id,
+                category_id,
+                description,
+                value,
+                is_fixed,
+                due_date,
+                type,
+                state
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """, (PreparedStatement ps) -> {
             ps.setLong(1, transaction.getUserId());
             ps.setLong(2, transaction.getCategoryId());
             ps.setString(3, transaction.getDescription());
             ps.setDouble(4, transaction.getValue());
             ps.setBoolean(5, transaction.isFixed());
-            ps.setDate(6, transaction.getDueDate().);
-
+            ps.setString(6, DateTimeFormatter.ISO_LOCAL_DATE.format(transaction.getDueDate()));
+            ps.setString(7, String.valueOf(transaction.getType().label));
+            ps.setString(8, String.valueOf(transaction.getState().label));
             return ps.execute();
         });
     }
