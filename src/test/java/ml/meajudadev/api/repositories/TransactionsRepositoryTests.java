@@ -22,7 +22,7 @@ public class TransactionsRepositoryTests {
 
     @Test
     @DisplayName("can create a new transaction")
-    public void givenNewTransaction_thenItCanBeSaved() {
+    public void givenNewTransaction_thenItCanBeSavedAndRetrieved() {
         Transaction transaction = new Transaction()
                 .setCategoryId(1L)
                 .setUserId(1L)
