@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,7 +32,7 @@ public class TransactionsRepositoryTests {
                 .setFixed(false)
                 .setState(TransactionState.ACTIVE)
                 .setType(TransactionType.EXPENSE)
-                .setValue(50D)
+                .setValue(BigDecimal.valueOf(500))
                 .setDueDate(LocalDate.of(2021, Month.JULY, 10));
 
         repository.save(transaction);
@@ -42,12 +44,16 @@ public class TransactionsRepositoryTests {
         assertFalse(transaction.isFixed());
         assertEquals(TransactionState.ACTIVE, transaction.getState());
         assertEquals(TransactionType.EXPENSE, transaction.getType());
-        assertEquals(50D, transaction.getValue());
+        assertEquals(BigDecimal.valueOf(500), transaction.getValue());
         assertEquals(LocalDate.of(2021, Month.JULY, 10), transaction.getDueDate());
         assertNotNull(transaction.getCreatedAt());
         assertNull(transaction.getLastUpdatedAt());
 
-        Transaction savedTransaction = repository.getById(transaction.getId()).get();
+        Optional<Transaction> query = repository.getById(transaction.getId());
+
+        assertTrue(query.isPresent());
+
+        Transaction savedTransaction = query.get();
 
         assertEquals(transaction.getId(), savedTransaction.getId());
         assertEquals(transaction.getCategoryId(), savedTransaction.getCategoryId());
