@@ -3,6 +3,7 @@ package ml.meajudadev.api.entities;
 import ml.meajudadev.api.entities.enums.TransactionState;
 import ml.meajudadev.api.entities.enums.TransactionType;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ public class Transaction {
     private long userId;
     private long categoryId;
     private String description;
-    private double value;
+    private BigDecimal value;
     private boolean isFixed;
     private LocalDate dueDate;
     private TransactionType type;
@@ -55,11 +56,11 @@ public class Transaction {
         return this;
     }
 
-    public double getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
-    public Transaction setValue(double value) {
+    public Transaction setValue(BigDecimal value) {
         this.value = value;
         return this;
     }
@@ -125,7 +126,7 @@ public class Transaction {
         return getId() == that.getId()
                 && getUserId() == that.getUserId()
                 && getCategoryId() == that.getCategoryId()
-                && Double.compare(that.getValue(), getValue()) == 0
+                && getValue().equals(that.getValue())
                 && isFixed() == that.isFixed()
                 && getDescription().equals(that.getDescription())
                 && Objects.equals(getDueDate(), that.getDueDate())
