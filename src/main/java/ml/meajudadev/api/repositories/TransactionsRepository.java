@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -37,7 +38,7 @@ public class TransactionsRepository {
             ps.setLong(1, transaction.getUserId());
             ps.setLong(2, transaction.getCategoryId());
             ps.setString(3, transaction.getDescription());
-            ps.setDouble(4, transaction.getValue());
+            ps.setDouble(4, transaction.getValue().doubleValue());
             ps.setBoolean(5, transaction.isFixed());
             ps.setString(6, DateTimeFormatter.ISO_LOCAL_DATE.format(transaction.getDueDate()));
             ps.setString(7, String.valueOf(transaction.getType().label));
@@ -62,7 +63,7 @@ public class TransactionsRepository {
                     .setUserId(rs.getLong("user_id"))
                     .setCategoryId(rs.getLong("category_id"))
                     .setDescription(rs.getString("description"))
-                    .setValue(rs.getDouble("value"))
+                    .setValue(BigDecimal.valueOf(rs.getDouble("value")))
                     .setFixed(rs.getBoolean("is_fixed"))
                     .setType(TransactionType.of(rs.getString("type").toCharArray()[0]))
                     .setState(TransactionState.of(rs.getString("state").toCharArray()[0]))
