@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -18,13 +19,13 @@ public class CategoriesRepository {
 
     public void createNew(ExpenseCategoryDto category) {
         db.execute("""
-            INSERT INTO categories (
-                user_id,
-                name,
-                enabled,
-                type
-            ) VALUES (?, ?, ?, ?)
-        """, (PreparedStatement ps) -> {
+                    INSERT INTO categories (
+                        user_id,
+                        name,
+                        enabled,
+                        type
+                    ) VALUES (?, ?, ?, ?)
+                """, (PreparedStatement ps) -> {
             ps.setLong(1, category.userId());
             ps.setString(2, category.name());
             ps.setBoolean(3, category.enabled());
@@ -35,13 +36,13 @@ public class CategoriesRepository {
 
     public void update(ExpenseCategoryDto category) {
         db.execute("""
-            UPDATE categories SET
-                user_id = ?,
-                name = ?,
-                enabled = ?,
-                type = ?
-            WHERE id = ?
-        """, (PreparedStatement ps) -> {
+                    UPDATE categories SET
+                        user_id = ?,
+                        name = ?,
+                        enabled = ?,
+                        type = ?
+                    WHERE id = ?
+                """, (PreparedStatement ps) -> {
             ps.setLong(1, category.userId());
             ps.setString(2, category.name());
             ps.setBoolean(3, category.enabled());
@@ -52,8 +53,14 @@ public class CategoriesRepository {
     }
 
     public Optional<ExpenseCategoryDto> getById(long categoryId) {
-        return db.query("SELECT * FROM categories WHERE id = ?", (PreparedStatement ps) -> {
+        return db.query((Connection connection) -> {
+            PreparedStatement ps = connection.prepareStatement(
+                    "SELECT * FROM categories WHERE id = ?",
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE
+            );
             ps.setLong(1, categoryId);
+            return ps;
         }, (ResultSet rs) -> {
             if (!rs.first())
                 return Optional.empty();
@@ -73,7 +80,7 @@ public class CategoriesRepository {
     public List<ExpenseCategoryDto> listAll() {
         return db.query("SELECT * FROM categories", (ResultSet r) -> {
             var categories = new ArrayList<ExpenseCategoryDto>();
-            while(r.next()) {
+            while (r.next()) {
                 categories.add(new ExpenseCategoryDto(
                         r.getInt("id"),
                         r.getInt("user_id"),
@@ -87,6 +94,6 @@ public class CategoriesRepository {
     }
 
     public void deleteById(long id) {
-         db.update("UPDATE categories SET enabled = 0 WHERE id = ?", id);
+        db.update("UPDATE categories SET enabled = 0 WHERE id = ?", id);
     }
 }
