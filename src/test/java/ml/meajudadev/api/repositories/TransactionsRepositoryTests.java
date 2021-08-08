@@ -32,7 +32,7 @@ public class TransactionsRepositoryTests {
                 .setFixed(false)
                 .setState(TransactionState.ACTIVE)
                 .setType(TransactionType.EXPENSE)
-                .setValue(BigDecimal.valueOf(500))
+                .setValue(BigDecimal.valueOf(500d))
                 .setDueDate(LocalDate.of(2021, Month.JULY, 10));
 
         repository.save(transaction);
@@ -44,7 +44,7 @@ public class TransactionsRepositoryTests {
         assertFalse(transaction.isFixed());
         assertEquals(TransactionState.ACTIVE, transaction.getState());
         assertEquals(TransactionType.EXPENSE, transaction.getType());
-        assertEquals(BigDecimal.valueOf(500), transaction.getValue());
+        assertEquals(BigDecimal.valueOf(500d), transaction.getValue());
         assertEquals(LocalDate.of(2021, Month.JULY, 10), transaction.getDueDate());
         assertNotNull(transaction.getCreatedAt());
         assertNull(transaction.getLastUpdatedAt());
