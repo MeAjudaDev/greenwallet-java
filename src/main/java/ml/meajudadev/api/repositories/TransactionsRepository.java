@@ -58,6 +58,8 @@ public class TransactionsRepository {
             if (!rs.first())
                 return Optional.empty();
 
+            String created_at = rs.getString("created_at").substring(0, 19);
+
             Transaction transaction = new Transaction()
                     .setId(rs.getLong("id"))
                     .setUserId(rs.getLong("user_id"))
@@ -67,11 +69,13 @@ public class TransactionsRepository {
                     .setFixed(rs.getBoolean("is_fixed"))
                     .setType(TransactionType.of(rs.getString("type").toCharArray()[0]))
                     .setState(TransactionState.of(rs.getString("state").toCharArray()[0]))
-                    .setCreatedAt(LocalDate.parse(rs.getString("created_at"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nnnnnn")));
+                    .setCreatedAt(LocalDate.parse(created_at, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
             String lastUpdatedAt = rs.getString("last_updated_at");
-            if (lastUpdatedAt != null && !lastUpdatedAt.isEmpty() && !lastUpdatedAt.isBlank())
-                transaction.setLastUpdatedAt(LocalDate.parse(lastUpdatedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nnnnnn")));
+            if (lastUpdatedAt != null && !lastUpdatedAt.isEmpty() && !lastUpdatedAt.isBlank()) {
+                lastUpdatedAt = lastUpdatedAt.substring(0, 19);
+                transaction.setLastUpdatedAt(LocalDate.parse(lastUpdatedAt, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            }
 
             String dueDate = rs.getString("due_date");
             if (dueDate != null && !dueDate.isEmpty() && !dueDate.isBlank())
